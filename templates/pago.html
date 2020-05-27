@@ -1,0 +1,45 @@
+{% extends "index.html" %}
+{% load static from staticfiles %}
+
+{% block main %}
+<div class="col-xs-12 col-md-12 ">
+    {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>{{ message }}</strong>
+                
+                </div>
+            {% endfor %}
+    {% endif %}  
+    <div class="list-group2">
+        <a href="#" class="list-group-item active">
+            <b>Listado Completo de Cuotas del padrón {{ padron.padron }} ({{ padron.tributo__abreviatura }}) - {{responsable.nombre}} </b>
+            {% if user.is_staff %} IdPadr: {{ padron.id_padron }}{% endif %}
+	    </a>
+	</div>
+	<div class="datagrid" style="overflow: auto; width : 100%; height : 550px;">
+		<form action="http://testpagos.cajero24.com/Pagos/Procesar" method="post" target="_blank">
+		    Listado de conceptos<br>
+		    <input type="text" name="Conceptos[0].Concepto" value="" placeholder="Concepto 1" /><br>
+		    <input type="text" name="Conceptos[0].Valor" value="" placeholder="0.01" /><br>
+		    <input type="text" name="Conceptos[0].InformacionAdicional" value="" placeholder="InformacionAdicional" /><br>		    
+		    <input type="text" name="Conceptos[1].Concepto" value="" placeholder="Concepto 2" /><br>
+		    <input type="text" name="Conceptos[1].Valor" value="" placeholder="0.01" /><br><br>
+		    <input type="text" name="Conceptos[1].InformacionAdicional" value="" placeholder="InformacionAdicional" /><br>
+		    <input type="text" name="Conceptos[2].Concepto" value="" placeholder="Concepto 3" /><br>
+		    <input type="text" name="Conceptos[2].Valor" value="" placeholder="0.01" /><br><br>
+		    <input type="text" name="Conceptos[2].InformacionAdicional" value="" placeholder="InformacionAdicional" /><br>
+
+
+
+		    <input type="hidden" name="UrlExito" value="" />
+		    <input type="hidden" name="UrlError" value="/Home/Error" />
+		    <input type="hidden" name="NoComercio" value="" />
+		    <button type="submit" class="btn btn-transparent" name="btnConfirm" value="Continuar">Continuar</button>
+		</form>
+	</div>
+	
+</div>	
+
+{% endblock main %}
